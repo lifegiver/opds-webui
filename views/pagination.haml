@@ -1,0 +1,15 @@
+.d-flex.justify-content-between.mt-4
+  - current_page = (params[:page] || "1").to_i
+  / Previous Button (Disabled if on Page 1)
+  .mx-auto
+    - if current_page > 1
+      %a.btn.btn-secondary{:href => "#{@current_url}&page=#{current_page - 1}"} ← Previous
+    - else
+      %button.btn.btn-secondary{:disabled => "disabled"} ← Previous
+    %span.align-self-center.px-5
+      Page #{current_page}
+    / flibgolite shows 19 books per page it seems
+    - if @books.any? and @books.count >= 19
+      %a.btn.btn-secondary{:href => "#{@current_url}&page=#{current_page + 1}"} Next →
+    - else
+      %button.btn.btn-secondary{:disabled => "disabled"} Next →

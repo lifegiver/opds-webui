@@ -1,0 +1,8 @@
+source 'http://rubygems.org'
+gem 'sinatra'
+gem 'rackup'
+gem 'open-uri'
+gem 'activesupport'
+gem 'puma'
+gem 'haml'
+gem 'sanitize'

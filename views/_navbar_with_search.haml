@@ -1,0 +1,7 @@
+%nav.navbar.navbar-expand-lg.bg-body-tertiary
+  .container-fluid
+    %a.navbar-brand{:href => "/?q=#{params[:q]}"} OPDS WebUI
+    #navbarSupportedContent.navbar.bg-body-tertiary
+      %form.d-flex{:action => "/", :role => "search"}
+        %input.form-control.me-2{"aria-label" => "Search", :name => "q", :placeholder => "Search", :type => "search", :value => "#{params[:q]}"}/
+        %button.btn.btn-outline-success{:type => "submit"} Search

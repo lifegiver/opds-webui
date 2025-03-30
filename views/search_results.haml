@@ -1,0 +1,14 @@
+%html{:lang => "en"}
+  %body
+    = haml :_header
+    = haml :_navbar_with_search
+    - if @authors.any?
+      .p-3
+        %h5 Authors
+        .list-group
+          - @authors.each do |author|
+            - link = author.dig("link", "href")
+            - author_names = author.dig("title")
+            %a.list-group-item.list-group-item-action{:href => "author?#{link.split('&').find {|e| e.include? 'id'}}&q=#{params[:q]}"}= author_names
+    = haml :books
+    = haml :pagination

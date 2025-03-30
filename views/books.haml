@@ -1,0 +1,35 @@
+- if @books.any?
+  .p-3
+    %h5 Books
+    - @books.each do |book|
+      .card.mb-4
+        .row.g-0
+          .col-md-3
+            - cover = book["link"].find { |l| l["href"].include?("covers?cover=") }
+            - if cover
+              %img.img-fluid.rounded-start{:alt => "Book Cover", :onerror => "if (this.src != 'assets/images/cover.png') this.src = '/assets/images/cover.png';", :src => "#{OPDS_URL}#{cover['href']}"}/
+            - else
+              %img.img-fluid.rounded-start{:alt => "Book Cover", :src => "/assets/images/cover.png"}/
+          .col-md-6
+            .card-body
+              %h5.card-title= book["title"]
+              %p.card-text
+                %strong Authors:
+                - authors_link = book['link'].find {|l| l['type'] == "application/atom+xml;profile=opds-catalog;kind=navigation"}
+                - authors_id = authors_link['href'].split('id=').last
+                %a{:href => "author?id=#{authors_id}&q=#{params[:q]}"}= Array.wrap(book["author"]).map { |a| a["name"] }.join(", ")
+              %p.card-text
+                - content = book['content'].split("Archive:")[0]
+                - sanitized_content = Sanitize.fragment(content, Sanitize::Config::BASIC)
+                = truncate(sanitized_content, length: 1000)
+
+              - download_link = book["link"].find { |l| l["type"] == "application/epub+zip" }
+              - if download_link
+                %p
+                  %a.btn.btn-primary{:href => "#{OPDS_URL}#{download_link['href']}"} Download EPUB
+              - else
+                %p.text-danger No download available
+
+- else
+  - if @author_name
+    %p No more books here, go to previous page

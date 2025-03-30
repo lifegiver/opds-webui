@@ -1,0 +1,8 @@
+!!!
+%html{:lang => "en"}
+  %body
+    = haml :_header
+    = haml :_navbar_with_search
+    %h2.text-primary= @author_name
+    = haml :books
+    = haml :pagination
